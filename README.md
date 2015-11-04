@@ -1,12 +1,12 @@
 autolockd
 =========
 
-``autolockd`` is a simple, dbus aware autolocker. ``autolock-daemon``
+``autolockd`` is a simple, dbus-aware autolocker. ``autolock-daemon``
 is run as a daemon and should be autostarted from the X
 session. ``autolock-cmd`` allows control of a running ``autolockd``.
 
 ``autolockd`` is primary targetted at minimal desktop environments
-like awesome and xmonad.
+like awesome, i3, and xmonad.
 
 Description
 -----------
@@ -45,7 +45,7 @@ Clone and install ``autolockd``:
 This installs the ``autolockd`` python package and the two scripts
 ``autolock-daemon`` and ``autolock-cmd``.
 
-For the default locking mechanism to work you shoudl also install
+For the default locking mechanism to work you should also install
 ``pyxtrlock``.
 
 Configuration

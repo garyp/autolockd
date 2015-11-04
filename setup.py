@@ -20,7 +20,7 @@ is run as a daemon and should be autostarted from the X
 session. ``autolock-cmd`` allows control of a running ``autolockd``.
 
 ``autolockd`` is primary targetted at minimal desktop environments
-like awesome and xmonad.
+like awesome, i3, and xmonad.
 """
 
 
