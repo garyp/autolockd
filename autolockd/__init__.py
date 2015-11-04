@@ -106,7 +106,6 @@ class Autolockd(dbus.service.Object):
         self._config.set("lock", "onidle", "true")
         self._config.set("lock", "idletime", "5")
         self._config.set("lock", "idleunit", "min")
-        self._config.set("lock", "onlidclose", "true")
         self._config.set("lock", "onsleep", "true")
 
         self._config.add_section("unlock")
@@ -146,15 +145,9 @@ class Autolockd(dbus.service.Object):
                                              "/org/freedesktop/UPower")
 
         self.upower = dbus.Interface(upower_proxy, "org.freedesktop.UPower")
-        self.upower_properties = dbus.Interface(
-            upower_proxy,
-            "org.freedesktop.DBus.Properties")
 
         if self._config.getboolean("lock", "onsleep"):
             self.upower.connect_to_signal("Sleeping", self._on_sleep)
-
-        if self._config.getboolean("lock", "onlidclose"):
-            self.upower.connect_to_signal("Changed", self._on_change)
 
         if self._config.getboolean("lock", "onidle"):
             self._screen_saver = xscreensaver.ScreenSaver()
@@ -163,11 +156,6 @@ class Autolockd(dbus.service.Object):
     def _on_sleep(self):
         logger.info('Locking: system is going to sleep.')
         self._lock_filtered()
-
-    def _on_change(self):
-        if self.upower_properties.Get("org.freedesktop.UPower", "LidIsClosed"):
-            logger.info('Locking: lid is closed.')
-            self._lock_filtered()
 
     def _lock_filtered(self):
         if self._active and not self._inhibit:

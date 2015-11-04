@@ -15,7 +15,7 @@ It uses DBUS as system interface, especially the
 ``org.freedesktop.UPower`` interface. The idle time is retrieved using
 ctypes bindings for the MIT screen saver X extension.
 
-It can be configured to lock on lid close, prior to suspend or
+It can be configured to lock prior to suspend or
 hibernate and after a specified idle time. Additionally it can be
 locked manually by ``autolock-cmd lock``.
 
