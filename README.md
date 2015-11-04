@@ -11,8 +11,8 @@ like awesome and xmonad.
 Description
 -----------
 
-It uses DBUS as system interface, especially the
-``org.freedesktop.UPower`` interface. The idle time is retrieved using
+It uses DBUS as the system interface, especially the
+``org.freedesktop.login1`` interface. The idle time is retrieved using
 ctypes bindings for the MIT screen saver X extension.
 
 It can be configured to lock prior to suspend or
@@ -99,7 +99,7 @@ Requirements
 * python3-dbus
 * python3-gobject (gi)
 * libX11, libXss (interfaced via ctypes)
-* a provider of the DBUS interface ``org.freedesktop.UPower``
+* a provider of the DBUS interface ``org.freedesktop.login1``
 * X server with MIT screen saver extension
 * screenlocker for default configuration:
   [pyxtrlock](git://github.com/leonnnn/pyxtrlock.git)

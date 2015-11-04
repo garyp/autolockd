@@ -141,21 +141,22 @@ class Autolockd(dbus.service.Object):
         self._loop = GObject.MainLoop()
         system_bus = dbus.SystemBus()
 
-        upower_proxy = system_bus.get_object("org.freedesktop.UPower",
-                                             "/org/freedesktop/UPower")
+        logind_proxy = system_bus.get_object("org.freedesktop.login1",
+                                             "/org/freedesktop/login1")
 
-        self.upower = dbus.Interface(upower_proxy, "org.freedesktop.UPower")
+        self.logind = dbus.Interface(logind_proxy, "org.freedesktop.login1.Manager")
 
         if self._config.getboolean("lock", "onsleep"):
-            self.upower.connect_to_signal("Sleeping", self._on_sleep)
+            self.logind.connect_to_signal("PrepareForSleep", self._on_sleep)
 
         if self._config.getboolean("lock", "onidle"):
             self._screen_saver = xscreensaver.ScreenSaver()
             GObject.timeout_add(1000, self._query_idle, None)
 
-    def _on_sleep(self):
-        logger.info('Locking: system is going to sleep.')
-        self._lock_filtered()
+    def _on_sleep(self, before_sleep):
+        if before_sleep:
+            logger.info('Locking: system is going to sleep.')
+            self._lock_filtered()
 
     def _lock_filtered(self):
         if self._active and not self._inhibit:
